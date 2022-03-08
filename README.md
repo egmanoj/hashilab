@@ -64,6 +64,18 @@ If everything goes well you should be able to see the following:
 2. Consul up and running at [http://localhost:8500/ui/](http://localhost:8500/ui/)
 3. Nomad up and running at [http://localhost:4646/ui/](http://localhost:4646/ui/)
 
+### Screenshots
+
+#### Consul
+
+![Consul UI running locally](screenshots/consul_ui.png "Consul UI")
+
+#### Nomad
+
+![Nomad UI running locally](screenshots/nomad_ui.png "Nomad UI")
+
+![Nomad Topology](screenshots/nomad_topology.png "Nomad Topology")
+
 ## Troubleshooting 
 
 You can SSH into the machines as follows:
@@ -180,4 +192,13 @@ ui {
 
 ## Code 
 
-This project has tooling to set up two HashiStack tools: Consul, and Nomad. I'll add more as I go along. Take a look at the issues, and pull requests to see the process.  
+This project has tooling to set up two HashiStack tools: Consul, and Nomad. I'll add more as I go along. Take a look at the issues, and pull requests to see the process.
+
+The following files will help you understand how the cluster is set up.
+
+1. Review the Vagrantfile. This file describes/controls the following:
+   1. How the VMs are created, network is configured etc.
+   2. How to install Docker using `vagrant-docker-compose`
+   3. How to use Ansible to install other HC software in the VMs after they start
+2. Review [playbooks/hashilab.yml](playbooks/hashilab.yml), and [playbooks/roles/hashilab/tasks/main.yml](playbooks/roles/hashilab/tasks/main.yml) 
+   1. These describe what software should be installed, and how they should be configured
