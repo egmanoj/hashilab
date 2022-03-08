@@ -94,10 +94,10 @@ Both Consul and Nomad are set up to run as services, using `systemd`.
 Check their status and logs to see if the services started properly:
 
  ```shell
- hashilab$ vagrant ssh server
- # After SSH into one of the VMs 
+hashilab$ vagrant ssh server
+# After SSH into one of the VMs 
  
- vagrant@server:~$ vagrant@server:~$ systemctl status consul 
+vagrant@server:~$ systemctl status consul
 ● consul.service - Consul Startup process
    Loaded: loaded (/etc/systemd/system/consul.service; enabled; vendor preset: enabled)
    Active: active (running) since Tue 2022-03-08 22:35:03 IST; 19min ago
@@ -114,7 +114,7 @@ vagrant@server:~$ systemctl status nomad
    CGroup: /system.slice/nomad.service
            └─18413 /usr/bin/nomad agent -config /etc/nomad.d/
 
-vagrant@server:~$ journalctl -u consul 
+vagrant@server:~$ journalctl -u consul
 -- Logs begin at Tue 2022-03-08 22:29:26 IST, end at Tue 2022-03-08 22:54:51 IST. --
 Mar 08 22:35:03 server systemd[1]: Started Consul Startup process.
 Mar 08 22:35:03 server consul[17486]: 2022-03-08T22:35:03.813+0530 [WARN]  agent: skipping file /etc/consul.d/consul.env, extension must be .hcl or .jso
@@ -130,16 +130,15 @@ Mar 08 22:36:22 server systemd[1]: Started Nomad Startup process.
 Mar 08 22:36:22 server bash[18413]: ==> WARNING: Bootstrap mode enabled! Potentially unsafe operation.
 Mar 08 22:36:22 server bash[18413]: ==> Loaded configuration from /etc/nomad.d/nomad.hcl
 Mar 08 22:36:22 server bash[18413]: ==> Starting Nomad agent...
-
  ```
 
-## Configuration 
+## Configuration
 
 Consul, and Nomad **server** configurations generated after provisioning are given below.
 
 ### Consul
 
-This file is located at `/etc/consul.d/consul.hcl` in the `server` VM. 
+This file is located at `/etc/consul.d/consul.hcl` in the `server` VM.
 
 ```hcl
 # NOTE: `ansible_eth1` because `eth1` is the name of the interface created via Vagrant
@@ -190,7 +189,7 @@ ui {
 }
 ```
 
-## Code 
+## Code
 
 This project has tooling to set up two HashiStack tools: Consul, and Nomad. I'll add more as I go along. Take a look at the issues, and pull requests to see the process.
 
@@ -200,5 +199,5 @@ The following files will help you understand how the cluster is set up.
    1. How the VMs are created, network is configured etc.
    2. How to install Docker using `vagrant-docker-compose`
    3. How to use Ansible to install other HC software in the VMs after they start
-2. Review [playbooks/hashilab.yml](playbooks/hashilab.yml), and [playbooks/roles/hashilab/tasks/main.yml](playbooks/roles/hashilab/tasks/main.yml) 
+2. Review [playbooks/hashilab.yml](playbooks/hashilab.yml), and [playbooks/roles/hashilab/tasks/main.yml](playbooks/roles/hashilab/tasks/main.yml)
    1. These describe what software should be installed, and how they should be configured
