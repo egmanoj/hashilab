@@ -1,0 +1,21 @@
+# NOTE: `ansible_eth1` because `eth1` is the name of the interface created via Vagrant
+bind_addr            = "{{ ansible_eth1.ipv4.address }}"
+data_dir             = "{{ consul_data_dir }}"
+datacenter           = "{{ datacenter }}"
+enable_script_checks = true
+enable_syslog        = true
+leave_on_terminate   = true
+log_level            = "DEBUG"
+node_name            = "{{ inventory_hostname }}"
+# // @formatter:off
+retry_join           = [{{ (servers + clients)|map("to_json")|join(", ") }}]
+# // @formatter:on
+
+# // @formatter:off
+{% if inventory_hostname == "server" %}
+bootstrap_expect    = 1
+client_addr         = "0.0.0.0"
+server              = true
+ui                  = true
+{% endif %}
+# // @formatter:on

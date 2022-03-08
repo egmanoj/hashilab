@@ -1,0 +1,18 @@
+---
+# Ref: https://www.consul.io/downloads
+- name: add hashicorp signing key
+  ansible.builtin.apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: add hashicorp repository
+  apt_repository:
+    # NOTE: `ansible_distribution_release` is an Ansible fact
+    # Ref: https://docs.ansible.com/ansible/latest/user_guide/playbooks_vars_facts.html
+    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    state: present
+
+- name: install consul
+  apt:
+    name: ["consul"]
+    update_cache: yes

@@ -1,0 +1,17 @@
+---
+# Configure the default bridge network to work with VPN
+- name: configure the default bridge network
+  copy:
+    src: docker/daemon.json
+    dest: /etc/docker/daemon.json
+    backup: yes
+    owner: root
+    group: root
+  register: docker_daemon_config
+
+- name: restart docker if daemon.json was updated
+  service:
+    name: docker
+    state: restarted
+  when: docker_daemon_config.changed
+

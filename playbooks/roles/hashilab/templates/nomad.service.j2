@@ -1,0 +1,22 @@
+[Unit]
+Description=Nomad Startup process
+# Nomad uses Consul for discovering/registering
+Requires=consul.service
+After=consul.service
+
+[Service]
+# Nomad server should be run as the nomad user. Nomad clients should be run as root.
+{% if inventory_hostname == "server" %}
+User=nomad
+Group=nomad
+{% else %}
+User=root
+Group=root
+{% endif %}
+
+Type=simple
+ExecStart=/bin/bash -c '/usr/bin/nomad  agent -config /etc/nomad.d/'
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target

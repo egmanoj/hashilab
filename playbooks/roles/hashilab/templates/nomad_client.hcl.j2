@@ -1,0 +1,15 @@
+# Ref: https://learn.hashicorp.com/tutorials/nomad/clustering
+# NOTE: `ansible_eth1` because `eth1` is the name of the interface created via Vagrant
+bind_addr  = "{{ ansible_eth1.ipv4.address }}"
+data_dir   = "{{ nomad_data_dir }}"
+datacenter = "{{ datacenter }}"
+
+client {
+  enabled           = true
+  # // @formatter:off
+  servers           = [{{ servers|map("to_json")|join(", ") }}]
+  # // @formatter:on
+  # Ref: https://discuss.hashicorp.com/t/internal-routing-problem/34201/5
+  # Ref: https://www.nomadproject.io/docs/configuration/client#network_interface
+  network_interface = "eth1"
+}

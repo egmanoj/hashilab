@@ -1,0 +1,10 @@
+---
+# NOTE: Why Ansible?
+# 1. Familiarity (of the author)
+# 2. Idempotent operations https://dev.to/admantium/ansible-idempotent-playbooks-4e67
+# Playbook to provision local Nomad cluster
+- hosts: all
+  become: yes         # NOTE: Use `sudo` to install softwarec
+  gather_facts: yes   # NOTE: We'll use to some of them later
+  roles:
+    - hashilab

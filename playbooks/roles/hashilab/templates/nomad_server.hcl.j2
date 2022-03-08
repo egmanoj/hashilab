@@ -1,0 +1,20 @@
+# Ref: https://learn.hashicorp.com/tutorials/nomad/clustering
+# NOTE: Bind to `0.0.0.0` to make UI accessible from host
+bind_addr  = "0.0.0.0"
+data_dir   = "{{ nomad_data_dir }}"
+datacenter = "{{ datacenter }}"
+
+advertise {
+  http = "{{ servers[0] }}"
+  rpc  = "{{ servers[0] }}"
+  serf = "{{ servers[0] }}"
+}
+
+server {
+  enabled          = true
+  bootstrap_expect = 1
+}
+
+ui {
+  enabled = true
+}

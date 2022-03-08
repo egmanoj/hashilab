@@ -1,0 +1,11 @@
+---
+# Install/configure software required for local Nomad cluster
+- import_tasks: set_timezone.yml
+- import_tasks: configure_docker.yml
+
+- import_tasks: install_consul.yml
+- import_tasks: configure_consul.yml
+
+- import_tasks: install_nomad.yml
+- import_tasks: configure_nomad.yml
+

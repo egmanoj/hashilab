@@ -1,0 +1,52 @@
+---
+# Ref: https://learn.hashicorp.com/tutorials/nomad/clustering?in=nomad/manage-clusters
+- name: create config directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    # NOTE: Nomad Server runs as `nomad.nomad`
+    owner: nomad
+    group: nomad
+  with_items:
+    - "{{ nomad_config_dir }}"
+    - "{{ nomad_data_dir }}"
+
+- name: create nomad.hcl for server
+  template:
+    src: "nomad_server.hcl.j2"
+    # Replace the default `nomad.hcl` created during installation
+    dest: "{{ nomad_config_dir }}/nomad.hcl"
+    mode: 0644
+    backup: yes
+  when: inventory_hostname == "server"
+
+- name: create nomad.hcl for client
+  template:
+    src: "nomad_client.hcl.j2"
+    # Replace the default `nomad.hcl` created during installation
+    dest: "{{ nomad_config_dir }}/nomad.hcl"
+    mode: 0644
+    backup: yes
+  when: inventory_hostname != "server"
+
+- name: create nomad.service for use with systemd
+  template:
+    src: "nomad.service.j2"
+    dest: "/etc/systemd/system/nomad.service"
+    mode: 0644
+  register: nomad_service_config
+
+- name: reload service config if service file was changed
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  when: nomad_service_config.changed
+
+- name: start nomad on boot
+  ansible.builtin.systemd:
+    name: nomad
+    enabled: yes
+
+- name: start nomad service
+  ansible.builtin.systemd:
+    name: nomad.service
+    state: started

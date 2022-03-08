@@ -1,0 +1,40 @@
+---
+# Ref: https://devopscube.com/setup-consul-cluster-guide/
+# Ref: https://www.consul.io/docs/agent/options#configuration_files
+- name: create config directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ consul_config_dir}}/scripts"
+    - "{{ consul_data_dir }}"
+
+# TODO: Generate secret using `consul keygen` (once) and add to ALL `consul.hcl`s
+- name: create consul.hcl
+  template:
+    src: "consul.hcl.j2"
+    dest: "/etc/consul.d/consul.hcl"
+    mode: 0644
+    backup: yes
+
+- name: create consul.service for use with systemd
+  copy:
+    src: "consul/consul.service"
+    dest: "/etc/systemd/system/consul.service"
+    mode: 0644
+  register: consul_service_config
+
+- name: reload service config if service file was changed
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  when: consul_service_config.changed
+
+- name: start consul on boot
+  ansible.builtin.systemd:
+    name: consul
+    enabled: yes
+
+- name: start consul service
+  ansible.builtin.systemd:
+    name: consul.service
+    state: started
