@@ -189,6 +189,54 @@ ui {
 }
 ```
 
+## Running Jobs
+
+Refer to the [examples](examples/) directory to see some sample jobs. You can run them using Nomad as described below.
+
+### Example 1: Load Balancing with Fabio
+
+1. SSH into the `server` VM
+
+   ```shell
+   hashilab$ vagrant ssh server
+   ```
+
+2. Vagrant shares the directory where `Vagrantfile` is located with all VMs as `/vagrant` inside the VMs. The
+   `examples` directory can therefore be found at `/vagrant/examples` inside `server`. To run a specific [example](https://learn.hashicorp.com/tutorials/nomad/load-balancing-fabio)
+   navigate to the appropriate child directory inside `examples`:
+
+   ```shell
+   vagrant@server:~$ cd /vagrant/examples/01_load_balancing_with_fabio/
+   ```
+
+3. Submit the `fabio.nomad` job:
+
+   ```shell
+   vagrant@server:/vagrant/examples/01_..._fabio$ nomad job run fabio.nomad
+   ```
+
+4. Submit the `webserver.nomad` job:
+
+   ```shell
+   vagrant@server:/vagrant/examples/01_..._fabio$ nomad job run webserver.nomad
+   ```
+
+5. If everything goes well you should be able to see the jobs running in the Nomad UI as shown in the screenshot
+   below.
+
+#### Screenshots
+
+##### Nomad
+
+![Nomad UI running fabio and webservers](screenshots/01_load_balancing_with_fabio/nomad_ui.png "Nomad UI")
+
+![Nomad Topology with fabio and webservers](screenshots/01_load_balancing_with_fabio/nomad_topology.png "Nomad
+Topology")
+
+##### Consul
+
+![Consul UI showing fabio and webservers](screenshots/01_load_balancing_with_fabio/consul_ui.png "Consul UI")
+
 ## Code
 
 This project has tooling to set up two HashiStack tools: Consul, and Nomad. I'll add more as I go along. Take a look at the issues, and pull requests to see the process.
