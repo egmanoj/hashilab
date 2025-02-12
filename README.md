@@ -20,7 +20,7 @@ used Ansible because:
 
 * This project assumes that you are running Ubuntu OS locally
 * This project has only been tested on Ubuntu 20.04
-* Local Virtual Machines (VM) are configured to use Ubuntu 20.04 
+* Local Virtual Machines (VM) are configured to use Ubuntu 24.04 LTS
   * You can change this by tweaking the [Vagrantfile](/Vagrantfile).  
 
 ## Instructions 
