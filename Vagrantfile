@@ -19,7 +19,6 @@ Vagrant.configure("2") do |config|
     # NOTE: IMPORTANT: Keep ip addresses in sync with `playbooks/roles/hashilab/defaults/main.yml`
     config.vm.define "server" do |server|
         server.vm.box = LINUX_BASE_BOX
-
         server.vm.hostname = "server"
         server.vm.network "private_network", ip: "172.20.20.10"
         server.vm.network "forwarded_port", guest: 8500, host: 8500     # Consul UI
