@@ -6,7 +6,7 @@
 
 # NOTE: Prefer `bento` to `hashicorp` as the former seems to be more up to date
 # https://app.vagrantup.com/bento
-LINUX_BASE_BOX = "bento/ubuntu-18.04"
+LINUX_BASE_BOX = "bento/ubuntu-24.04"
 
 # NOTE: Architecture
 # Provision one server Virtual Machine (VM), and two client VMs.
@@ -60,6 +60,9 @@ def configureVirtualBox(config, cpus: "2", memory: "2048")
 end
 
 def configureProvisioners(config)
+    # Ansible requires the locale encoding to be UTF-8
+    ENV['LC_ALL'] = "en_US.UTF-8"
+
     # NOTE: Nomad requires Docker to be installed and running on the host alongside the Nomad agent.
     # Ref: https://www.nomadproject.io/docs/drivers/docker#client-requirements
     # We'll do this using a plugin https://github.com/leighmcculloch/vagrant-docker-compose
