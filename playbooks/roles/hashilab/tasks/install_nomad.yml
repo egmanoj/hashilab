@@ -16,3 +16,11 @@
   apt:
     name: ["nomad"]
     update_cache: yes
+
+# Nomad's task group networks integrate with Consul's service mesh using bridge networking
+# Ref: https://developer.hashicorp.com/nomad/docs/install/production/requirements#bridge-networking-and-iptables
+- name: enable bridge networking
+  community.general.modprobe:
+    name: bridge
+    state: present
+    persistent: present
