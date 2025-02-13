@@ -34,7 +34,7 @@ used Ansible because:
    hashilab$ ./prerequisites.sh
    ```
 
-3. Install the [`vagrant-docker-compose`](https://github.com/leighmcculloch/vagrant-docker-compose) plugin, used to 
+2. Install the [`vagrant-docker-compose`](https://github.com/leighmcculloch/vagrant-docker-compose) plugin, used to
    install Docker in all VMs. This plugin will be installed locally inside the project repository.    
 
     ```shell
@@ -42,7 +42,7 @@ used Ansible because:
     # Installing the 'vagrant-docker-compose' plugin. This can take a few minutes...
     ```
 
-4. Bring up the VMs. Vagrant will invoke Ansible to set up and configure the necessary software the first time this 
+3. Bring up the VMs. Vagrant will invoke Ansible to set up and configure the necessary software the first time this
    is done. This will take a few minutes (~15 in my experience) depending on your machine and network speed.
 
     ```shell
